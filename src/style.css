@@ -1,4 +1,4 @@
-.drag-wrap {
+.drag-bar {
   width: 40px;
   height: 40px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 
-.drag-mask {
+.drag-wrap {
   position: absolute;
   left: 0;
   right: 0;
