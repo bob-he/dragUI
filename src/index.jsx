@@ -7,6 +7,7 @@ import './style.css'
 export default createClass({
   propTypes: {
     className: PropTypes.string,
+    children: PropTypes.any,
     onDrag: PropTypes.func,
     axis: PropTypes.string,
     range: PropTypes.array,
@@ -111,14 +112,16 @@ export default createClass({
       }
       axisX = 0
     }
-    const dragClass = classNames('drag-bar', className)
+    const dragClass = classNames('drag-wrap', className)
     return (
-      <div className="drag-mask">
+      <div className={dragClass}>
         <div
-          className={dragClass}
+          className="drag-bar"
           style={{transform: `translate(${axisX}px, ${axisY}px)`}}
           onMouseUp={this.onMouseUp}
-          onMouseDown={this.onMouseDown}>
+          onMouseDown={this.onMouseDown}
+        >
+          {this.props.children}
         </div>
       </div>
     )
