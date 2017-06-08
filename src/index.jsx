@@ -27,8 +27,8 @@ export default createClass({
     window.addEventListener('mouseup', this.onMouseUp)
   },
 
-  componentDidUnmount() {
-    window.removeEventListener('mousemove',  this.handleOnMousemove)
+  componentWillUnmount() {
+    window.removeEventListener('mousemove', this.handleOnMousemove)
   },
 
   handleOnMousemove(e) {
@@ -50,7 +50,7 @@ export default createClass({
       axisX: axisX,
       axisY: axisY
     }, () => {
-      if (this.props.onDrag === 'function') {
+      if (typeof this.props.onDrag === 'function') {
         this.props.onDrag(axisX, axisY)
       }
     })
@@ -85,7 +85,7 @@ export default createClass({
       axisX: 0,
       axisY: 0
     }, () => {
-      window.removeEventListener('mousemove',  this.handleOnMousemove)
+      window.removeEventListener('mousemove', this.handleOnMousemove)
       this.moveHandler = false
     })
   },
