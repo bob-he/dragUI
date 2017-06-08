@@ -7,6 +7,7 @@ import './style.css'
 export default createClass({
   propTypes: {
     className: PropTypes.string,
+    onDrag: PropTypes.func,
     axis: PropTypes.string,
     range: PropTypes.array,
     leftWay: PropTypes.bool,
@@ -24,6 +25,10 @@ export default createClass({
 
   componentDidMount() {
     window.addEventListener('mouseup', this.onMouseUp)
+  },
+
+  componentDidUnmount() {
+    window.removeEventListener('mousemove',  this.handleOnMousemove)
   },
 
   handleOnMousemove(e) {
@@ -45,7 +50,9 @@ export default createClass({
       axisX: axisX,
       axisY: axisY
     }, () => {
-      
+      if (this.props.onDrag === 'function') {
+        this.props.onDrag(axisX, axisY)
+      }
     })
   },
 
