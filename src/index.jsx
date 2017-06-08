@@ -113,11 +113,13 @@ export default createClass({
     }
     const dragClass = classNames('drag-bar', className)
     return (
-      <div
-        className={dragClass}
-        style={{transform: `translate(${axisX}px, ${axisY}px)`}}
-        onMouseUp={this.onMouseUp}
-        onMouseDown={this.onMouseDown}>
+      <div className="drag-mask">
+        <div
+          className={dragClass}
+          style={{transform: `translate(${axisX}px, ${axisY}px)`}}
+          onMouseUp={this.onMouseUp}
+          onMouseDown={this.onMouseDown}>
+        </div>
       </div>
     )
   }
