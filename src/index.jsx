@@ -8,6 +8,7 @@ export default createClass({
   propTypes: {
     className: PropTypes.string,
     children: PropTypes.any,
+    mask: PropTypes.bool,
     onDrag: PropTypes.func,
     axis: PropTypes.string,
     range: PropTypes.array,
@@ -95,35 +96,40 @@ export default createClass({
     let {axisX, axisY} = this.state
     const {axis, leftWay, rightWay, topWay, bottomWay, className} = this.props
     if (axis === 'x') {
-      if (leftWay && axisX > 0) {
+      if (leftWay && !rightWay && axisX > 0) {
         axisX = 0
       }
-      if (rightWay && axisX < 0) {
+      if (rightWay && !leftWay && axisX < 0) {
         axisX = 0
       }
       axisY = 0
     }
     if (axis === 'y') {
-      if (topWay && axisY > 0) {
+      if (topWay && !bottomWay && axisY > 0) {
         axisY = 0
       }
-      if (bottomWay && axisY < 0) {
+      if (bottomWay && !topWay && axisY < 0) {
         axisY = 0
       }
       axisX = 0
     }
-    const dragClass = classNames('drag-wrap', className)
-    return (
-      <div className={dragClass}>
-        <div
-          className="drag-bar"
-          style={{transform: `translate(${axisX}px, ${axisY}px)`}}
-          onMouseUp={this.onMouseUp}
-          onMouseDown={this.onMouseDown}
-        >
-          {this.props.children}
-        </div>
+    let drag = (
+      <div
+        className={classNames('drag-bar', className)}
+        style={{transform: `translate(${axisX}px, ${axisY}px)`}}
+        onMouseUp={this.onMouseUp}
+        onMouseDown={this.onMouseDown}
+      >
+        {this.props.children}
       </div>
     )
+    if (this.props.mask) {
+      drag = (
+        <div className={classNames('drag-wrap', className)}>
+          {drag}
+        </div>
+      )
+    }
+    return drag
   }
 })
