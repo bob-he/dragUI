@@ -7,6 +7,7 @@ import './style.css'
 export default createClass({
   propTypes: {
     className: PropTypes.string,
+    style: PropTypes.object,
     children: PropTypes.any,
     mask: PropTypes.bool,
     onDrag: PropTypes.func,
@@ -94,7 +95,7 @@ export default createClass({
 
   render: function() {
     let {axisX, axisY} = this.state
-    const {axis, leftWay, rightWay, topWay, bottomWay, className} = this.props
+    const {style, axis, leftWay, rightWay, topWay, bottomWay, className} = this.props
     if (axis === 'x') {
       if (leftWay && !rightWay && axisX > 0) {
         axisX = 0
@@ -113,10 +114,13 @@ export default createClass({
       }
       axisX = 0
     }
+    const dragStyle = Object(style, {
+      transform: `translate(${axisX}px, ${axisY}px)`
+    })
     let drag = (
       <div
         className={classNames('drag-bar', className)}
-        style={{transform: `translate(${axisX}px, ${axisY}px)`}}
+        style={dragStyle}
         onMouseUp={this.onMouseUp}
         onMouseDown={this.onMouseDown}
       >
