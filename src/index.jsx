@@ -114,7 +114,7 @@ export default createClass({
       }
       axisX = 0
     }
-    const dragStyle = Object(style, {
+    const dragStyle = Object.assign({}, style, {
       transform: `translate(${axisX}px, ${axisY}px)`
     })
     let drag = (
