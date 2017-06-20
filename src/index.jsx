@@ -11,6 +11,7 @@ export default createClass({
     children: PropTypes.any,
     mask: PropTypes.bool,
     onDrag: PropTypes.func,
+    onMouseDown: PropTypes.func,
     axis: PropTypes.string,
     range: PropTypes.array,
     leftWay: PropTypes.bool,
@@ -24,10 +25,6 @@ export default createClass({
       axisX: 0,
       axisY: 0
     }
-  },
-
-  componentDidMount() {
-    window.addEventListener('mouseup', this.onMouseUp)
   },
 
   componentWillUnmount() {
@@ -79,6 +76,10 @@ export default createClass({
       if (!this.moveHandler) {
         this.moveHandler = true
         window.addEventListener('mousemove', this.handleOnMousemove)
+        window.addEventListener('mouseup', this.onMouseUp)
+      }
+      if (typeof this.props.onMouseDown === 'function') {
+        this.props.onMouseDown()
       }
     })
   },
