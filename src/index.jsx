@@ -49,10 +49,6 @@ export default createClass({
     this.setState({
       axisX: axisX,
       axisY: axisY
-    }, () => {
-      if (typeof this.props.onDrag === 'function') {
-        this.props.onDrag(axisX, axisY)
-      }
     })
   },
 
@@ -85,12 +81,16 @@ export default createClass({
   },
 
   onMouseUp() {
+    const {axisX, axisY} = this.state
     this.setState({
       axisX: 0,
       axisY: 0
     }, () => {
       window.removeEventListener('mousemove', this.handleOnMousemove)
       this.moveHandler = false
+      if (typeof this.props.onDrag === 'function') {
+        this.props.onDrag(axisX, axisY)
+      }
     })
   },
 
