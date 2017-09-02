@@ -53,6 +53,7 @@ export default createClass({
   },
 
   onMouseDown(e) {
+    document.body.style['user-select'] = 'none'
     if (e.button === 2 || e.button === 3) {
       return
     }
@@ -81,6 +82,7 @@ export default createClass({
   },
 
   onMouseUp() {
+    document.body.style['user-select'] = ''
     const {axisX, axisY} = this.state
     this.setState({
       axisX: 0,
