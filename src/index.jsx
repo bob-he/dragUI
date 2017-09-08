@@ -12,12 +12,14 @@ export default createClass({
     mask: PropTypes.bool,
     onDrag: PropTypes.func,
     onMouseDown: PropTypes.func,
+    onMouseMove: PropTypes.func,
     axis: PropTypes.string,
     range: PropTypes.array,
     leftWay: PropTypes.bool,
     rightWay: PropTypes.bool,
     topWay: PropTypes.bool,
-    bottomWay: PropTypes.bool
+    bottomWay: PropTypes.bool,
+    stopMove: PropTypes.bool
   },
 
   getInitialState() {
@@ -32,6 +34,9 @@ export default createClass({
   },
 
   handleOnMousemove(e) {
+    if (this.props.stopMove) {
+      return
+    }
     let axisX = e.pageX - this.state.pageX
     let axisY = e.pageY - this.state.pageY
     if (axisX < -this.state.left) {
@@ -49,6 +54,10 @@ export default createClass({
     this.setState({
       axisX: axisX,
       axisY: axisY
+    }, () => {
+      if (typeof this.props.onMouseMove === 'function') {
+        this.props.onMouseMove(axisX, axisY)
+      }
     })
   },
 
