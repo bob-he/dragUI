@@ -18,8 +18,7 @@ export default createClass({
     leftWay: PropTypes.bool,
     rightWay: PropTypes.bool,
     topWay: PropTypes.bool,
-    bottomWay: PropTypes.bool,
-    stopMove: PropTypes.bool
+    bottomWay: PropTypes.bool
   },
 
   getInitialState() {
@@ -34,9 +33,6 @@ export default createClass({
   },
 
   handleOnMousemove(e) {
-    if (this.props.stopMove) {
-      return
-    }
     let axisX = e.pageX - this.state.pageX
     let axisY = e.pageY - this.state.pageY
     if (axisX < -this.state.left) {
@@ -50,6 +46,25 @@ export default createClass({
     }
     if (axisY > this.state.bottom) {
       return
+    }
+    let {axis, leftWay, rightWay, topWay, bottomWay} = this.props
+    if (axis === 'x') {
+      if (leftWay && !rightWay && axisX > 0) {
+        axisX = 0
+      }
+      if (rightWay && !leftWay && axisX < 0) {
+        axisX = 0
+      }
+      axisY = 0
+    }
+    if (axis === 'y') {
+      if (topWay && !bottomWay && axisY > 0) {
+        axisY = 0
+      }
+      if (bottomWay && !topWay && axisY < 0) {
+        axisY = 0
+      }
+      axisX = 0
     }
     this.setState({
       axisX: axisX,
@@ -107,25 +122,7 @@ export default createClass({
 
   render: function() {
     let {axisX, axisY} = this.state
-    const {style, axis, leftWay, rightWay, topWay, bottomWay, className} = this.props
-    if (axis === 'x') {
-      if (leftWay && !rightWay && axisX > 0) {
-        axisX = 0
-      }
-      if (rightWay && !leftWay && axisX < 0) {
-        axisX = 0
-      }
-      axisY = 0
-    }
-    if (axis === 'y') {
-      if (topWay && !bottomWay && axisY > 0) {
-        axisY = 0
-      }
-      if (bottomWay && !topWay && axisY < 0) {
-        axisY = 0
-      }
-      axisX = 0
-    }
+    let {style, className} = this.props
     const dragStyle = Object.assign({}, style, {
       transform: `translate(${axisX}px, ${axisY}px)`
     })
