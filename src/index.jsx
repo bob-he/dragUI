@@ -18,7 +18,8 @@ export default createClass({
     leftWay: PropTypes.bool,
     rightWay: PropTypes.bool,
     topWay: PropTypes.bool,
-    bottomWay: PropTypes.bool
+    bottomWay: PropTypes.bool,
+    stopMove: PropTypes.bool
   },
 
   getInitialState() {
@@ -33,6 +34,9 @@ export default createClass({
   },
 
   handleOnMousemove(e) {
+    if (this.props.stopMove) {
+      return
+    }
     let axisX = e.pageX - this.state.pageX
     let axisY = e.pageY - this.state.pageY
     if (axisX < -this.state.left) {
