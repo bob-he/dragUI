@@ -19,7 +19,8 @@ export default createClass({
     rightWay: PropTypes.bool,
     topWay: PropTypes.bool,
     bottomWay: PropTypes.bool,
-    stopMove: PropTypes.bool
+    stopMove: PropTypes.bool,
+    dragType: PropTypes.string
   },
 
   getInitialState() {
@@ -126,10 +127,20 @@ export default createClass({
 
   render: function() {
     let {axisX, axisY} = this.state
-    let {style, className} = this.props
-    const dragStyle = Object.assign({}, style, {
-      transform: `translate(${axisX}px, ${axisY}px)`
-    })
+    let {style, className, dragType} = this.props
+    let customStyle = {}
+    if (dragType === 'transform') {
+      customStyle = {
+        transform: 'translate(' + axisX + 'px, ' + axisY + 'px)'
+      }
+    }
+    if (dragType === 'direction') {
+      customStyle = {
+        left: axisX,
+        top: axisY
+      }
+    }
+    let dragStyle = Object.assign({}, style, customStyle)
     let drag = (
       <div
         className={classNames('drag-bar', className)}
