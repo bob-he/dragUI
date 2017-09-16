@@ -82,6 +82,11 @@ export default createClass({
   },
 
   onMouseDown(e) {
+    document.body.style['-webkit-touch-callout'] = 'none'
+    document.body.style['-webkit-user-select'] = 'none'
+    document.body.style['-khtml-user-select'] = 'none'
+    document.body.style['-moz-user-select'] = 'none'
+    document.body.style['-ms-user-select'] = 'none'
     document.body.style['user-select'] = 'none'
     if (e.button === 2 || e.button === 3) {
       return
@@ -111,6 +116,11 @@ export default createClass({
   },
 
   onMouseUp() {
+    document.body.style['-webkit-touch-callout'] = ''
+    document.body.style['-webkit-user-select'] = ''
+    document.body.style['-khtml-user-select'] = ''
+    document.body.style['-moz-user-select'] = ''
+    document.body.style['-ms-user-select'] = ''
     document.body.style['user-select'] = ''
     const {axisX, axisY} = this.state
     this.setState({
